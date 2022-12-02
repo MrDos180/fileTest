@@ -30,19 +30,16 @@ public class FileTest {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().contains(".pdf") && !entry.getName().contains("MACOSX")) {  // особенность файловой системы mac os
-                    System.out.println("PDF = " + entry.getName());
                     PDF content = new PDF(zis);
                     assertThat(content.text).contains("Рекомендации перед собеседованием:");
 
 
                 } else if (entry.getName().contains(".xlsx") && !entry.getName().contains("MACOSX")) {
-                    System.out.println("XLSX = " + entry.getName());
                     XLS content = new XLS(zis);
                     assertThat(content.excel.getSheetAt(0).getRow(3).getCell(1).getStringCellValue()).contains("Основная з/плата");
 
 
                 } else if (entry.getName().contains(".csv") && !entry.getName().contains("MACOSX")) {
-                    System.out.println("CSV = " + entry.getName());
                     CSVReader reader = new CSVReader(new InputStreamReader(zis));
                     List<String[]> content = reader.readAll();
                     assertThat(content.get(3)[0]).contains("johnson81");
@@ -61,7 +58,6 @@ public class FileTest {
         assertThat(employee.getRole()).contains("Dev");
         assertThat(employee.married).isFalse();
         assertThat(employee.address.getCountry()).contains("Austria");
-
 
     }
 
